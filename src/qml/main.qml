@@ -26,7 +26,7 @@ ApplicationWindow {
 
                 action: Action {
                     shortcut: "Ctrl+o"
-                    onTriggered: console.log("Action 'Open'");
+                    onTriggered: openFileDialog.open();
                 }
             }
             MenuItem {
@@ -53,7 +53,6 @@ ApplicationWindow {
             MenuItem {
                 text: qsTr("Undo")
                 icon.source: "icons/undo.png"
-
                 action: Action {
                     shortcut: "Ctrl+z"
                     onTriggered: warea.callUndo()
@@ -69,7 +68,6 @@ ApplicationWindow {
                 }
             }
         }
-
         Menu {
             title: qsTr("Help")
 
@@ -605,6 +603,19 @@ ApplicationWindow {
             console.log("Canceled")
             colorDialog.close()
         }
+    }
+
+    FileDialog{
+        id: openFileDialog
+        title: "Select file to be opened"
+        folder: shortcuts.home
+        onAccepted: {
+            console.log('You chose: ' + openFileDialog.fileUrls)
+        }
+        onRejected: {
+            console.log("Canceled")
+        }
+        Component.onCompleted: visible = false
     }
 
 
