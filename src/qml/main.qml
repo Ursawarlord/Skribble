@@ -611,30 +611,29 @@ ApplicationWindow {
         }
     }
 
-     FileDialog{
-         id: saveFileDialog
-         title: "opened"
-         folder: shortcuts.home
-         onAccepted: {
-             console.log('You chose: ' + openFileDialog.fileUrls)
+    FileDialog{
+             id: saveFileDialog
+             title: "opened"
+             folder: shortcuts.home
+             onAccepted: {
+                 console.log('You chose: ' + openFileDialog.fileUrls)
+             }
+             onRejected: {
+                 console.log("Canceled")
+             }
+             nameFilters: [ "Image files (*.png)" ]
+             selectedNameFilter: "*.PNG"
+             Component.onCompleted: {
+                 visible = false
+             }
          }
-         onRejected: {
-             console.log("Canceled")
-         }
-         nameFilters: [ "Image files (*.png)" ]
-         selectedNameFilter: "*.PNG"
-         Component.onCompleted: {
-             visible = false
-             console.log(fileUrl)
-             warea.saveFile(fileUrl)
-         }
-     }
     FileDialog{
         id: openFileDialog
         title: "Select file to be opened"
         folder: shortcuts.home
         onAccepted: {
-            console.log('You chose: ' + openFileDialog.fileUrls)
+            console.log('You chose: ' + openFileDialog.fileUrl)
+            warea.openFile(openFileDialog.fileUrl);
         }
         onRejected: {
             console.log("Canceled")
@@ -643,10 +642,11 @@ ApplicationWindow {
         selectedNameFilter: "PNG"
         Component.onCompleted: {
             visible = false
-            warea.openFile(fileUrl);
 
         }
     }
+
+
 
 
 

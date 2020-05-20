@@ -9,9 +9,8 @@
 #include <cstddef>
 #include <iostream>
 #include <utility>
-#include <QPixmap>
-#include <QByteArray>
-#include <QBuffer>
+#include <iostream>
+#include <QDir>
 
 
 namespace sk {
@@ -132,7 +131,9 @@ auto Canvas::changeWidth(const int width) -> void
 }
 
 auto Canvas::openFile(const QString& src) -> void{
+
     m_history.openFile(src);
+
 }
 auto Canvas::saveFile(const QString& dest) -> void{
     m_history.saveFile(dest);
