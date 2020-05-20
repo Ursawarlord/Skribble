@@ -57,6 +57,7 @@ auto CachedLayers::redo() -> bool
     return m_layers.redo();
 }
 
+
 } // namespace sk::impl
 
 namespace sk {
@@ -101,6 +102,7 @@ auto DrawHistory::paintCanvas(QPainter* const painter) -> void
         layer.paintBlock(*painter);
     }
 }
+
 
 auto DrawHistory::popFirst(bool const foreign) -> void
 {
@@ -183,6 +185,16 @@ auto DrawHistory::handleLocal(QPoint const& pos, DrawMode& mode) -> void
     }
 
     m_lastPoint = pos;
+}
+
+auto DrawHistory::openFile(QString const &src) -> void
+{
+    m_cache.getLast().getLastLayer().load(src,"PNG");
+}
+
+auto DrawHistory::saveFile(QString const &dest) -> void
+{
+    m_cache.getLast().getLastLayer().save(dest,"PNG");
 }
 
 auto DrawHistory::drawAt(QPoint const& pos, DrawMode& mode, bool const foreign)

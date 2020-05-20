@@ -26,7 +26,10 @@ ApplicationWindow {
 
                 action: Action {
                     shortcut: "Ctrl+o"
-                    onTriggered: openFileDialog.open();
+                    onTriggered: {
+                    console.log("Action 'Open'");
+                    openFileDialog.open()
+                    }
                 }
             }
             MenuItem {
@@ -34,7 +37,10 @@ ApplicationWindow {
 
                 action: Action {
                     shortcut: "Ctrl+s"
-                    onTriggered: console.log("Action 'Save'");
+                    onTriggered: {
+                        console.log("Action 'Save'");
+                        saveFileDialog.open()
+                    }
                 }
             }
             MenuItem {
@@ -605,6 +611,24 @@ ApplicationWindow {
         }
     }
 
+     FileDialog{
+         id: saveFileDialog
+         title: "opened"
+         folder: shortcuts.home
+         onAccepted: {
+             console.log('You chose: ' + openFileDialog.fileUrls)
+         }
+         onRejected: {
+             console.log("Canceled")
+         }
+         nameFilters: [ "Image files (*.png)" ]
+         selectedNameFilter: "*.PNG"
+         Component.onCompleted: {
+             visible = false
+             console.log(fileUrl)
+             warea.saveFile(fileUrl)
+         }
+     }
     FileDialog{
         id: openFileDialog
         title: "Select file to be opened"
@@ -615,8 +639,15 @@ ApplicationWindow {
         onRejected: {
             console.log("Canceled")
         }
-        Component.onCompleted: visible = false
+        nameFilters: [ "Image files (*.png)"]
+        selectedNameFilter: "PNG"
+        Component.onCompleted: {
+            visible = false
+            warea.openFile(fileUrl);
+
+        }
     }
+
 
 
 }
