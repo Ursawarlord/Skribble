@@ -10,8 +10,9 @@
 #include <iostream>
 #include <utility>
 #include <iostream>
+#include <QUrl>
 #include <QDir>
-
+#include <QFileInfo>
 
 namespace sk {
 
@@ -132,11 +133,27 @@ auto Canvas::changeWidth(const int width) -> void
 
 auto Canvas::openFile(const QString& src) -> void{
 
-    m_history.openFile(src);
+    const QUrl url(src);
+    QString path;
+    if(url.isLocalFile()) {
+        path = QDir::toNativeSeparators(url.toLocalFile());
+        std::cout << path.toStdString() << std::endl;
+        m_history.openFile(path);
+
+
+        QPixmap opened;
+        opened.load(path);
+        QPainter painter(&opened);
+        paint(&painter);
+    }
 
 }
 auto Canvas::saveFile(const QString& dest) -> void{
-    m_history.saveFile(dest);
+    const QUrl url(dest);
+    QString path;
+        path = QDir::toNativeSeparators(url.toLocalFile());
+        std::cout << path.toStdString() << std::endl;
+        m_history.saveFile(path);
 
 }
 

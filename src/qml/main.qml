@@ -615,8 +615,10 @@ ApplicationWindow {
              id: saveFileDialog
              title: "opened"
              folder: shortcuts.home
+            selectExisting: false
              onAccepted: {
-                 console.log('You chose: ' + openFileDialog.fileUrls)
+                 console.log('You chose: ' + saveFileDialog.fileUrl)
+                 warea.openFile(saveFileDialog.fileUrl);
              }
              onRejected: {
                  console.log("Canceled")

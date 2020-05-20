@@ -6,6 +6,7 @@
 #include <cstddef>
 #include <deque>
 #include <iterator>
+#include <iostream>
 
 namespace sk::impl {
 
@@ -189,12 +190,12 @@ auto DrawHistory::handleLocal(QPoint const& pos, DrawMode& mode) -> void
 
 auto DrawHistory::openFile(QString const &src) -> void
 {
-    m_cache.getLast().getLastLayer().load(src,"PNG");
+    m_layers.back().getLastLayer().load(src);
 }
 
 auto DrawHistory::saveFile(QString const &dest) -> void
 {
-    m_cache.getLast().getLastLayer().save(dest,"PNG");
+//    m_layers.back().getLastLayer().save(dest);
 }
 
 auto DrawHistory::drawAt(QPoint const& pos, DrawMode& mode, bool const foreign)
